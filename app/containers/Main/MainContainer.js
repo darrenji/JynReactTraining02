@@ -1,10 +1,15 @@
 import React from 'react'
+import { container, innerContainer } from './styles.css'
 
 const MainContainer = React.createClass({
   render () {
     return (
-            <p>{'Hello Worldd!'}</p>
-        )
+      <div className={container}>
+        <div className={innerContainer}>
+          {this.props.children}
+        </div>
+      </div>
+    )
   },
 })
 
