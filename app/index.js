@@ -1,15 +1,19 @@
-import ReactDOM from 'react-dom'
 import React from 'react'
-import getRoutes from './config/routes'
-import { createStore, applyMiddleware } from 'redux'
+import ReactDOM from 'react-dom'
+import getRoutes from 'config/routes'
 import users from 'redux/modules/users'
+import thunk from 'redux-thunk'
+import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
-import thunk from 'redux-thunk'    
 import { checkIfAuthed } from 'helpers/auth'
 
 const store = createStore(users, applyMiddleware(thunk))
 
 function checkAuth (nextState, replace) {
+  if (store.getState().isFetching === true) {
+    return
+  }
+
   const isAuthed = checkIfAuthed(store)
   const nextPathName = nextState.location.pathname
   if (nextPathName === '/' || nextPathName === '/auth') {
@@ -23,10 +27,8 @@ function checkAuth (nextState, replace) {
   }
 }
 
-
 ReactDOM.render(
-    <Provider store={store}>
-        {getRoutes(checkAuth)}
-    </Provider>,
-    document.getElementById('app')
-)
+  <Provider store={store}>
+    {getRoutes(checkAuth)}
+  </Provider>,
+document.getElementById('app'))
