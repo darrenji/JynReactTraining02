@@ -14,18 +14,21 @@ const AuthenticateContainer = React.createClass({
     })
   },
   render () {
+    console.log(this.props)
     return (
       <Authenticate
         onAuth={this.handleAuth}
-        isFetching={false}
-        error={''} />
+        isFetching={this.props.isFetching}
+        error={this.props.error} />
     )
   },
 })
 
 function mapStateToProps(state){
-    console.log('State', state)
-    return {}
+    return {
+        isFetching: state.isFetching,
+        error: state.error
+    }
 }
 
 export default connect(mapStateToProps)(AuthenticateContainer)
