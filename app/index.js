@@ -17,7 +17,7 @@ const store = createStore(
 )
 
 function checkAuth (nextState, replace) {
-  if (store.getState().isFetching === true) {
+  if (store.getState().users.isFetching === true) {
     return
   }
 
